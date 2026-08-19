@@ -174,5 +174,33 @@ namespace Order.Data
             // 6. returns the fully populated OrderDetail using your existing helper method
             return await GetOrderByIdAsync(newOrderId);
         }
+        public async Task<IEnumerable<MonthlyProfitDto>> GetProfitByMonthAsync()
+        {
+            // 1. fetches completed orders including items and product pricing details
+            var completedOrders = await _orderContext.Order
+                .Include(x => x.Items)
+                .Include(x => x.Status)
+                .Where(x => x.Status.Name.ToLower() == "completed")
+                .ToListAsync();
+
+            // 2. groups the orders by Year and Month in memory (handles byte array ID mapping safely)
+            var profitByMonth = completedOrders
+                .GroupBy(x => new { x.CreatedDate.Year, x.CreatedDate.Month })
+                .Select(group => new MonthlyProfitDto
+                {
+                    Year = group.Key.Year,
+                    Month = group.Key.Month,
+                    MonthName = new DateTime(group.Key.Year, group.Key.Month, 1).ToString("MMMM"),
+                    CompletedOrdersCount = group.Count(),
+                    TotalProfit = group.Sum(order =>
+                        order.Items.Sum(i => (i.Product.UnitPrice - i.Product.UnitCost) * i.Quantity.Value)
+                    )
+                })
+                .OrderByDescending(x => x.Year)
+                .ThenByDescending(x => x.Month)
+                .ToList();
+
+            return profitByMonth;
+        }
     }
 }

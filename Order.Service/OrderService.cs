@@ -37,6 +37,11 @@ namespace Order.Service
             // Calls repository layer to save the new order to the database
             return await _orderRepository.CreateOrderAsync(request);
         }
-    
-}
+        // Asynchronously retrieves the monthly profit summary for all completed orders from the repository
+        public async Task<IEnumerable<MonthlyProfitDto>> GetProfitByMonthAsync()
+        {
+            return await _orderRepository.GetProfitByMonthAsync();
+        }
+
+    }
 }

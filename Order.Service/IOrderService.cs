@@ -17,5 +17,7 @@ namespace Order.Service
 
         // Asynchronously creates a new order based on the incoming request data
         Task<OrderDetail> CreateOrderAsync(CreateOrderRequest request);
+
+        Task<IEnumerable<MonthlyProfitDto>> GetProfitByMonthAsync();
     }
 }

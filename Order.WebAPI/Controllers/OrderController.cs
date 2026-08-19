@@ -73,7 +73,16 @@ namespace OrderService.WebAPI.Controllers
             var createdOrder = await _orderService.CreateOrderAsync(request);
             return CreatedAtAction(nameof(GetOrderById), new { orderId = createdOrder.Id }, createdOrder);
         }
+        // HTTP GET endpoint to retrieve the calculated profit breakdown by month for all completed orders
+        [HttpGet("profit-by-month")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<MonthlyProfitDto>>> GetProfitByMonth()
+        {
+            var profitData = await _orderService.GetProfitByMonthAsync();
+            return Ok(profitData);
+        }
     }
+
     public class UpdateStatusRequest
     {
         public string Status { get; set; }

@@ -17,5 +17,8 @@ namespace Order.Data
 
         // Asynchronously creates a new order in the database and returns its detail view
         Task<OrderDetail> CreateOrderAsync(CreateOrderRequest request);
+
+        // Retrieves a breakdown of calculated profit grouped by month for all completed orders
+        Task<IEnumerable<MonthlyProfitDto>> GetProfitByMonthAsync();
     }
 }
