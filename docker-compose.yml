@@ -1,0 +1,21 @@
+services:
+  api:
+      build: ./src
+      container_name: order-api
+      ports:
+          - 8000:8080
+      depends_on:
+        - db
+      links:
+        - "db:database"
+  db:
+    image: mysql:5.7
+    container_name: order-db
+    volumes:
+          - ./mysql-init.sql:/docker-entrypoint-initdb.d/init.sql:delegated
+    environment:      
+      - MYSQL_ROOT_PASSWORD=nmCsdkhj20n@Sa
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1
+    ports:
+      - 3306:3306
+      
