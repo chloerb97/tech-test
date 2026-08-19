@@ -1,0 +1,31 @@
+﻿using Order.Data;
+using Order.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Order.Service
+{
+    public class OrderService : IOrderService
+    {
+        private readonly IOrderRepository _orderRepository;
+
+        public OrderService(IOrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+
+        //updated to accept the optional status parameter and pass it to repository
+        public async Task<IEnumerable<OrderSummary>> GetOrdersAsync(string? status = null)
+        {
+            var orders = await _orderRepository.GetOrdersAsync(status);
+            return orders;
+        }
+
+        public async Task<OrderDetail> GetOrderByIdAsync(Guid orderId)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            return order;
+        }
+    }
+}

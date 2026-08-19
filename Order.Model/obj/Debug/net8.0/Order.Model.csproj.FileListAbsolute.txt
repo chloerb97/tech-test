@@ -1,0 +1,12 @@
+C:\Users\chloe\Documents\tech-test\src\Order.Model\bin\Debug\net8.0\Order.Model.deps.json
+C:\Users\chloe\Documents\tech-test\src\Order.Model\bin\Debug\net8.0\Order.Model.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Model\bin\Debug\net8.0\Order.Model.pdb
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.AssemblyInfoInputs.cache
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.AssemblyInfo.cs
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.csproj.CoreCompileInputs.cache
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.sourcelink.json
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\refint\Order.Model.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\Order.Model.pdb
+C:\Users\chloe\Documents\tech-test\src\Order.Model\obj\Debug\net8.0\ref\Order.Model.dll

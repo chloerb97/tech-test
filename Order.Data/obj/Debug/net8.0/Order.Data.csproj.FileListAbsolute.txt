@@ -1,0 +1,16 @@
+C:\Users\chloe\Documents\tech-test\src\Order.Data\bin\Debug\net8.0\Order.Data.deps.json
+C:\Users\chloe\Documents\tech-test\src\Order.Data\bin\Debug\net8.0\Order.Data.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Data\bin\Debug\net8.0\Order.Data.pdb
+C:\Users\chloe\Documents\tech-test\src\Order.Data\bin\Debug\net8.0\Order.Model.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Data\bin\Debug\net8.0\Order.Model.pdb
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.csproj.AssemblyReference.cache
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.AssemblyInfoInputs.cache
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.AssemblyInfo.cs
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.csproj.CoreCompileInputs.cache
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.sourcelink.json
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.csproj.Up2Date
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\refint\Order.Data.dll
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\Order.Data.pdb
+C:\Users\chloe\Documents\tech-test\src\Order.Data\obj\Debug\net8.0\ref\Order.Data.dll
