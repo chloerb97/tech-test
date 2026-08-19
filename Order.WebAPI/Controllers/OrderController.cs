@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Order.Service;
+using Order.Model;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace OrderService.WebAPI.Controllers
@@ -42,5 +45,41 @@ namespace OrderService.WebAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPut("{orderId}/status")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateOrderStatus(Guid orderId, [FromBody] UpdateStatusRequest request)
+        {
+            var success = await _orderService.UpdateOrderStatusAsync(orderId, request.Status);
+            if (!success)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+        // Handles HTTP POST requests to create a new order
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createdOrder = await _orderService.CreateOrderAsync(request);
+            return CreatedAtAction(nameof(GetOrderById), new { orderId = createdOrder.Id }, createdOrder);
+        }
     }
+    public class UpdateStatusRequest
+    {
+        public string Status { get; set; }
+    }
+
 }
+
+
+

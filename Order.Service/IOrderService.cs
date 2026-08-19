@@ -11,5 +11,11 @@ namespace Order.Service
         Task<IEnumerable<OrderSummary>> GetOrdersAsync(string? status = null);
         
         Task<OrderDetail> GetOrderByIdAsync(Guid orderId);
+
+        // asynchronously update status of an order by its ID
+        Task<bool> UpdateOrderStatusAsync(Guid orderId, string status);
+
+        // Asynchronously creates a new order based on the incoming request data
+        Task<OrderDetail> CreateOrderAsync(CreateOrderRequest request);
     }
 }

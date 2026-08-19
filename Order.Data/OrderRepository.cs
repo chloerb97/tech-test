@@ -27,7 +27,7 @@ namespace Order.Data
 
             if (!string.IsNullOrEmpty(status))
             {
-                // applys optional case-insensitive status filter
+                // applies optional case-insensitive status filter
                 query = query.Where(x => x.Status.Name.ToLower() == status.ToLower());
             }
 
@@ -84,6 +84,95 @@ namespace Order.Data
                 }).SingleOrDefaultAsync();
             
             return order;
+        }
+        // updates the status of an order in the database
+        public async Task<bool> UpdateOrderStatusAsync(Guid orderId, string status)
+        {
+            var orderIdBytes = orderId.ToByteArray();
+
+            var order = await _orderContext.Order
+                .Where(x => _orderContext.Database.IsInMemory() ? x.Id.SequenceEqual(orderIdBytes) : x.Id == orderIdBytes)
+                .SingleOrDefaultAsync();
+
+            if (order == null)
+            {
+                return false;
+            }
+
+            var statusEntity = await _orderContext.OrderStatus
+                .Where(s => s.Name.ToLower() == status.ToLower())
+                .SingleOrDefaultAsync();
+
+            if (statusEntity == null)
+            {
+                return false;
+            }
+
+            order.StatusId = statusEntity.Id;
+
+            await _orderContext.SaveChangesAsync();
+            return true;
+        }
+        // Asynchronously creates a new order in the database and returns its detail view
+        public async Task<OrderDetail> CreateOrderAsync(CreateOrderRequest request)
+        {
+            // 1. Get the default status (e.g., "Pending") for a newly created order
+            var defaultStatus = await _orderContext.OrderStatus
+                .Where(s => s.Name.ToLower() == "pending")
+                .SingleOrDefaultAsync();
+
+            // Fallback if "Pending" isn't explicitly found, take the first available status
+            if (defaultStatus == null)
+            {
+                defaultStatus = await _orderContext.OrderStatus.FirstOrDefaultAsync();
+            }
+
+            // 2. Map request Guids to byte arrays (matching your database schema design)
+            var newOrderId = Guid.NewGuid();
+            var newOrderIdBytes = newOrderId.ToByteArray();
+            var resellerIdBytes = Guid.Parse(request.ResellerId).ToByteArray();
+            var customerIdBytes = Guid.Parse(request.CustomerId).ToByteArray();
+
+            // 3. Create the new Order database entity
+            var newOrder = new Data.Entities.Order // Adjust namespace if your EF entities live elsewhere
+            {
+                Id = newOrderIdBytes,
+                ResellerId = resellerIdBytes,
+                CustomerId = customerIdBytes,
+                StatusId = defaultStatus.Id,
+                CreatedDate = DateTime.UtcNow,
+                Items = new List<Data.Entities.OrderItem>()
+            };
+
+            // 4. Map and add each item, fetching product details to link ServiceId and pricing
+            foreach (var itemDto in request.Items)
+            {
+                var productIdGuid = Guid.Parse(itemDto.ProductId);
+                var productIdBytes = productIdGuid.ToByteArray();
+
+                var product = await _orderContext.OrderProduct
+                    .Where(p => p.Id == productIdBytes)
+                    .SingleOrDefaultAsync();
+
+                if (product != null)
+                {
+                    newOrder.Items.Add(new Data.Entities.OrderItem
+                    {
+                        Id = Guid.NewGuid().ToByteArray(),
+                        OrderId = newOrderIdBytes,
+                        ProductId = productIdBytes,
+                        ServiceId = product.ServiceId,
+                        Quantity = itemDto.Quantity
+                    });
+                }
+            }
+
+            // 5. saves to the database context
+            _orderContext.Order.Add(newOrder);
+            await _orderContext.SaveChangesAsync();
+
+            // 6. returns the fully populated OrderDetail using your existing helper method
+            return await GetOrderByIdAsync(newOrderId);
         }
     }
 }

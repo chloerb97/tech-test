@@ -27,5 +27,16 @@ namespace Order.Service
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
             return order;
         }
-    }
+        public async Task<bool> UpdateOrderStatusAsync(Guid orderId, string status)
+        {
+            return await _orderRepository.UpdateOrderStatusAsync(orderId, status);
+        }
+        // Asynchronously creates a new order via the repository and returns the created order details
+        public async Task<OrderDetail> CreateOrderAsync(CreateOrderRequest request)
+        {
+            // Calls repository layer to save the new order to the database
+            return await _orderRepository.CreateOrderAsync(request);
+        }
+    
+}
 }
